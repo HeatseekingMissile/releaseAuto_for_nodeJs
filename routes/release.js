@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var spawn = require('child_process').spawn;
 
 var config = {
   user:'root',
@@ -85,7 +86,6 @@ router.get('/select',function(req,res){
 });
 
 router.post('/add',function(req,res){
-    console.log(req.body);
     var protos = [];
     for(var key in req.body){
         if(req.body.hasOwnProperty(key)){
@@ -94,7 +94,13 @@ router.post('/add',function(req,res){
     }
     console.log(protos);
     mysqlCrud.insert(client,addReleaseSql,protos);
-    res.send('发布成功 等待测试通过');
+    var free  = spawn('ps', ['-ef']);//执行shell
+
+    // 捕获标准输出并将其打印到控制台
+    free.stdout.on('data', function (data) {
+        console.log('脚本显示结果：\n' + data);
+    });
+    // res.send('发布成功 等待测试通过');
 });
 
 module.exports = router;

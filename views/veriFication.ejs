@@ -19,7 +19,11 @@
            </thead>
            <tbody>
               <% for(var i=0;i< data.result.length;i++){ %>
-               <tr>
+              <% var cls ='';
+                 if(i%2==0){
+                    cls='info';
+                 } %>
+               <tr class=<%= cls %>>
                  <% for(var key in data.result[i]){ %>
                      <% if(data.result[i].hasOwnProperty(key)){ %>
                         <% if(key!='projectHost'){ %>
@@ -37,7 +41,7 @@
                         <% } %>
                      <% } %>
                  <% } %>
-                 <td><button class='btn btn-success btn-smail'>测试通过</button></td>
+                 <td><button class='btn btn-success btn-mini'>测试通过</button></td>
               </tr>
               <% } %>
            </tbody>

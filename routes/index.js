@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
       title: 'Release for NodeJs',
       listName:'发布流程',
       uploadFile:'上传文件',
-      technologicalProcess:['上传文件-upload','测试验证-veriFication','自动发布-autoRelease'],
+      technologicalProcess:['上传文件-upload','测试验证-veriFication','手动发布-autoRelease'],
       submitName:'上传'
   }
   res.render('index',release);
