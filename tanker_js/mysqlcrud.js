@@ -1,11 +1,13 @@
 var mysql = require('mysql');
 
+
 var config = {
-  user:'root',
-  password:'123456',
-  host:'42.96.168.163',
-  database:'Elis_log'
+  user:'',
+  password:'',
+  host:'',
+  database:''
 };
+
 var client = mysql.createConnection(config);
 client.connect(function(error,results){
     if(error){

@@ -2,8 +2,6 @@
 <html>
   <head>
     <title><%= title%></title>
-    <!-- <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' /> -->
-    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
   </head>
   <body>
     <form action="/release/add" method="post" >
@@ -32,7 +30,7 @@
          <label>文件1发布位置</label>
          <input type='text' name='position1'>
          <span class="help-block"></span>
-         
+
          <!-- <label class="checkbox"><input type="checkbox" />自动发送邮件</label> -->
          <label class="checkbox"><input type="checkbox" checked="true" name="isCreateReleaseFile" />生成发布文件</label>
          <label class="checkbox"><input type="checkbox" checked="true" name="isCopyOriginalFile" />备份原文件</label>
