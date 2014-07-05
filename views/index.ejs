@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title%></title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <!-- <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p> -->
+    <div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3>
+  			<%= title%>
+			</h3>
+			<div class="row-fluid">
+				<div class="span2">
+					<ul class="nav nav-list">
+						<li class="nav-header">
+							<%= listName%>
+						</li>
+            <% for(var i=0;i< technologicalProcess.length;i++ ){ %>
+						<li>
+							<a href="#"><%= technologicalProcess[i] %></a>
+						</li>
+            <% } %>
+					</ul>
+				</div>
+				<div class="span10">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script src='/javascripts/jquery-2.1.1.min.js'></script>
+    <script src='/javascripts/bootstrap.min.js'></script>
+    <script>
+        $(function(){
+            $('.span10').load('/release/add');
+
+            $('.nav-list').find('li').eq(1).click(function(){
+                $('.span10').load('/release/add');
+            });
+            $('.nav-list').find('li').eq(2).click(function(){
+                $('.span10').load('/release/select');
+            });
+        });
+    </script>
+  </body>
+</html>

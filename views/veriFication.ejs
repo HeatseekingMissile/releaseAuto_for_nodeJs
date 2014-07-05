@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= data.title%></title>
+  </head>
+  <body>
+    <fieldset>
+       <legend><%= data.title%></legend>
+         <table class="table">
+           <thead>
+             <tr>
+               <% for(var key in data.result[0]){ %>
+                   <% if(data.result[0].hasOwnProperty(key)){ %>
+                      <th><%= key %></th>
+                   <% } %>
+               <% } %>
+               <th>操作</th>
+             </tr>
+           </thead>
+           <tbody>
+              <% for(var i=0;i< data.result.length;i++){ %>
+               <tr>
+                 <% for(var key in data.result[i]){ %>
+                     <% if(data.result[i].hasOwnProperty(key)){ %>
+                        <% if(key!='projectHost'){ %>
+                          <td><%= data.result[i][key] %></td>
+                        <% }else{
+                           var url = '';
+                           if(data.result[i][key]==0){
+                              url='http://vs.eucita.cn';
+                             }else if(data.result[i][key]==1){
+                              url='http://vs.eucita.com';
+                             }else{
+                              url='http://www.eucita.net';
+                           } %>
+                          <td><a href=<%= url %> ><%= url %></a></td>
+                        <% } %>
+                     <% } %>
+                 <% } %>
+                 <td><button class='btn btn-success btn-smail'>测试通过</button></td>
+              </tr>
+              <% } %>
+           </tbody>
+         </table>
+    </fieldset>
+  </body>
+</html>

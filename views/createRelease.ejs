@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title%></title>
+    <!-- <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' /> -->
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+  </head>
+  <body>
+    <form action="/release/add" method="post" >
+      <fieldset>
+         <legend><%= title%></legend>
+         <label>项目类型[vs_trunk/vs_client]</label>
+         <select name="projectType">
+         <option value="0" >[vs_trunk]</option>
+         <option value="1" >[vs_client]</option>
+         </select>
+         <span class="help-block"></span>
+         <label>项目发布地址 <a >项目列表明细</a></label>
+         <select name="projectHost" >
+         <option value="0" >vs.eucita.cn</option>
+         <option value="1" >vs.eucita.com</option>
+         <option value="2" >www.eucita.net</option>
+         </select>
+         </option>
+         <span class="help-block"></span>
+         <label>项目修改描述</label>
+         <textarea name="projectContent" style="margin: 0px 0px 10px; width: 420px; height: 139px;"></textarea>
+         <span class="help-block"></span>
+         <!-- <label class="checkbox"><input type="checkbox" />自动发送邮件</label> -->
+         <label class="checkbox"><input type="checkbox" checked="true" name="isCreateReleaseFile" />生成发布文件</label>
+         <label class="checkbox"><input type="checkbox" checked="true" name="isCopyOriginalFile" />备份原文件</label>
+         <label class="checkbox"><input type="checkbox" checked="true" name="isResetTomcat" />替换后自动重启tomcat</label>
+         <button type="submit" class="btn btn-primary btn-smail">提交</button>
+      </fieldset>
+    </form>
+  </body>
+</html>
