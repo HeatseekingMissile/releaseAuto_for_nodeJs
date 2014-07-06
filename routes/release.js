@@ -1,13 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var fs = require('fs');
+//upload
+var formidable = require("formidable");
+//shell
 var spawn = require('child_process').spawn;
 
+
+
 var config = {
-  user:'root',
-  password:'123456',
-  host:'42.96.168.163',
-  database:'releaseAuto_for_NodeJs'
+  user:'',
+  password:'',
+  host:'',
+  database:''
 };
 
 var client = mysql.createConnection(config);
@@ -86,21 +92,34 @@ router.get('/select',function(req,res){
 });
 
 router.post('/add',function(req,res){
-    var protos = [];
-    for(var key in req.body){
-        if(req.body.hasOwnProperty(key)){
-            protos.push(req.body[key]);
-        };
-    }
-    console.log(protos);
-    mysqlCrud.insert(client,addReleaseSql,protos);
-    var free  = spawn('ps', ['-ef']);//执行shell
-
-    // 捕获标准输出并将其打印到控制台
-    free.stdout.on('data', function (data) {
-        console.log('脚本显示结果：\n' + data);
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+      var protos = [];
+      for(var key in fields){
+          if(fields.hasOwnProperty(key)){
+              protos.push(fields[key]);
+          };
+      }
+      var tmp_path = files.file1.path;
+      var target_path = './public/images/' + files.file1.name;
+      fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+      // 删除临时文件夹文件,
+         fs.unlink(tmp_path, function() {
+           if (err) throw err;
+           console.log('File uploaded to: ' + target_path + ' - ' + files.file1.size + ' bytes');
+         });
+      });
+      // console.log(protos);
+      // console.log(files);
     });
-    // res.send('发布成功 等待测试通过');
+
+    // mysqlCrud.insert(client,addReleaseSql,protos);
+    // var free  = spawn('ps', ['-ef']);//执行shell
+    // free.stdout.on('data', function (data) {
+    //     console.log('脚本显示结果：\n' + data);
+    // });
+    res.send('发布成功 等待测试通过');
 });
 
 module.exports = router;
