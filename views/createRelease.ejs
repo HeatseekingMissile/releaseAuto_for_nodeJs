@@ -35,8 +35,22 @@
          <label class="checkbox"><input type="checkbox" checked="true" name="isCreateReleaseFile" />生成发布文件</label>
          <label class="checkbox"><input type="checkbox" checked="true" name="isCopyOriginalFile" />备份原文件</label>
          <label class="checkbox"><input type="checkbox" checked="true" name="isResetTomcat" />替换后自动重启tomcat</label>
-         <button type="submit" class="btn btn-primary btn-smail">提交</button>
+         <button id="sub" type="submit" class="btn btn-primary btn-smail">提交</button>
       </fieldset>
     </form>
+    <script src='/javascripts/jquery-2.1.1.min.js'></script>
+    <script src='/javascripts/bootstrap.min.js'></script>
+    <script>
+      $(function(){
+        $('#sub').click(function(){
+          if($('input[name=file1]').val().trim()==''){
+            alert('没有上传文件...');
+            return false;
+          }else{
+            alert('上传成功');
+          }
+        });
+      });
+    </script>
   </body>
 </html>

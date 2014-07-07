@@ -2,9 +2,6 @@
 <html>
   <head>
     <title><%= data.title%></title>
-    <style>
-
-    </style>
   </head>
   <body>
     <fieldset>
@@ -13,9 +10,11 @@
            <thead>
              <tr>
                <% for(var key in data.result[0]){ %>
-                   <% if(data.result[0].hasOwnProperty(key)){ %>
+                 <% if(data.result[0].hasOwnProperty(key)){ %>
+                   <% if(key!='isCreateReleaseFile'&&key!='isCopyOriginalFile'&&key!='isResetTomcat'&&key!='status'){ %>
                       <th><%= key %></th>
                    <% } %>
+                 <% } %>
                <% } %>
                <th>操作</th>
              </tr>
@@ -29,26 +28,76 @@
                <tr class=<%= cls %>>
                  <% for(var key in data.result[i]){ %>
                      <% if(data.result[i].hasOwnProperty(key)){ %>
-                        <% if(key!='projectHost'){ %>
-                          <td><%= data.result[i][key] %></td>
-                        <% }else{
-                           var url = '';
-                           if(data.result[i][key]==0){
-                              url='http://vs.eucita.cn';
-                             }else if(data.result[i][key]==1){
-                              url='http://vs.eucita.com';
-                             }else{
-                              url='http://www.eucita.net';
-                           } %>
-                          <td><a href=<%= url %> ><%= url %></a></td>
+                        <% if(key!='isCreateReleaseFile'&&key!='isCopyOriginalFile'&&key!='isResetTomcat'&&key!='status'){ %>
+                            <% if(key=='projectHost'){
+                              var url='';
+                              if(data.result[i][key]==0){
+                                url='http://vs.eucita.cn';
+                              }else if(data.result[i][key]==1){
+                                url='http://vs.eucita.com';
+                              }else{
+                                url='http://www.eucita.net';
+                              } %>
+                              <td><a href=<%= url %> ><%= url %></a></td>
+                           <% }else if(key=='projectType'){
+                              var type='';
+                              if(data.result[i][key]==0){
+                                type='vs_client';
+                              }else{
+                                type='va_trunk';
+                              } %>
+                              <td><%= type %></td>
+                           <% }else if(key=='projectContent'){ %>
+                              <td><a class="element" href="#" data-toggle="tooltip" title='<%= data.result[i][key]%>'><%= data.result[i][key].substring(0,10)%></a></td>
+                           <% }else if(key=='position'){ %>
+                              <td><a class="element" href="#" data-toggle="tooltip" title='<%= data.result[i][key]%>'><%= data.result[i][key].substring(0,10)%></a></td>
+                           <% }else{ %>
+                              <td><%= data.result[i][key] %></td>
+                           <% } %>
                         <% } %>
                      <% } %>
                  <% } %>
-                 <td><button class='btn btn-success btn-mini'>测试通过</button></td>
+                 <% if(data.result[i].status==0){ %>
+                   <td width='6%'><input type='button' value='未通过' class='btn btn-danger btn-mini' name='<%= data.result[i].id%>' /></td>
+                 <% }else{ %>
+                   <td width='6%'><input type='button' value='通过' class='btn btn-success btn-mini disabled' name='<%= data.result[i].id%>' /></td>
+                 <% } %>
+
               </tr>
               <% } %>
            </tbody>
          </table>
     </fieldset>
+    <script>
+      $(function(){
+        $('.element').mouseenter(function(){
+          $(this).tooltip('show');
+        });
+
+        $(".btn-mini").click(function(){
+            if(this.value=='通过'){
+              return false;
+            }
+            var selfBtn = this;
+            var data ={releaseId:this.name};
+            $.ajax({
+              type:'post',
+              data:data,
+              cache: false,
+              jsonpCallback: "callback",
+              url:'/release/updateStatus',
+              timeout: 5000,
+              success:function(result){
+                  if(result){
+                    selfBtn.className='btn btn-success btn-mini disabled';
+                    selfBtn.value='通过';
+                  };
+              },
+              dataType:'json',
+            });
+
+        })
+      })
+    </script>
   </body>
 </html>
